@@ -1,14 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Task from './components/Task';
 
 export default function App() {
     return (
         <View style={styles.container}>
             {/* Today's Tasks */}
             <View style={styles.tasksWrapper}>
-                <Text style={styles.section}>
-                    Today's Tasks
+                <Text style={styles.sectionTile}>
+                    Today's Tasks?
                 </Text>
+
+                <View style={styles.items}>
+                    {/* This is where all the tasks will go! */}
+                    <Task text={'Task 1'} />
+                    <Task text={'Task 2'} />
+                </View>
             </View>
         </View>
     );
@@ -17,12 +23,17 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: "#E8EAED",
     },
     tasksWrapper: {
-
+        paddingTop: 80,
+        paddingHorizontal: 20,
     },
-    section: {
-
+    sectionTile: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    items: {
+        marginTop: 30,
     }
 });
