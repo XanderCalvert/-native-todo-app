@@ -1,8 +1,27 @@
-import { KeyboardAvoidingView, StyleSheet, Text, View, Platform, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, StyleSheet, Text, View, Platform, TextInput, TouchableOpacity, Keyboard } from 'react-native';
 import Task from './components/Task';
 
 
 export default function App() {
+
+    const [task, setTask] = useState<string | null>('');
+
+    const [taskItems, setTaskItems] = useState<string[]>([])
+
+    const handleAddTask = () => {
+        console.log(task);
+        Keyboard.dismiss();
+        setTaskItems([...taskItems, task])
+        setTask(null);
+    }
+
+    const completeTask = (i) => {
+        let itemsCopy = [...taskItems];
+        itemsCopy.splice(i, 1);
+        setTaskItems(itemsCopy);
+    }
+
     return (
         <View style={styles.container}>
             {/* Today's Tasks */}
@@ -13,8 +32,16 @@ export default function App() {
 
                 <View style={styles.items}>
                     {/* This is where all the tasks will go! */}
-                    <Task text={'Task 1'} />
-                    <Task text={'Task 2'} />
+                    {
+                        taskItems.map((item, i) => {
+                            return (
+                                <TouchableOpacity key={i} onPress={() => completeTask(i)}>
+                                    <Task text={item} />
+                                </TouchableOpacity>
+                            )
+
+                        })
+                    }
                 </View>
             </View>
 
@@ -23,9 +50,9 @@ export default function App() {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.writeTaskWrapper}
             >
-                <TextInput style={styles.input} placeholder={'Write a task'} />
+                <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text => setTask(text)} />
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleAddTask()}>
                     <View style={styles.addWrapper}>
                         <Text style={styles.addText}>+</Text>
                     </View>
