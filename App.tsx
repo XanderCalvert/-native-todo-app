@@ -16,7 +16,7 @@ export default function App() {
         setTask(null);
     }
 
-    const completeTask = (i) => {
+    const completeTask = (i: number) => {
         let itemsCopy = [...taskItems];
         itemsCopy.splice(i, 1);
         setTaskItems(itemsCopy);
